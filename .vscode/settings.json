@@ -1,0 +1,53 @@
+{
+  "eslint.enable": true,
+  "eslint.run": "onSave",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false, // ✅ Ensure spaces instead of tabs
+  "prettier.endOfLine": "lf", // ✅ Match ESLint (fix line endings)
+  "prettier.printWidth": 80, // ✅ Ensures better line wrapping
+  "prettier.trailingComma": "es5", // ✅ Helps with object/array formatting
+  "prettier.arrowParens": "always", // ✅ Consistency in function formatting
+  "prettier.bracketSpacing": true, // ✅ Spaces inside object brackets
+  "prettier.singleAttributePerLine": true, // ✅ Keeps JSX clean
+  "files.autoSave": "onFocusChange",
+  "eslint.lintTask.enable": true,
+  "eslint.quiet": false, // ✅ Show all ESLint messages (fix)
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "invalid",
+        "settings": {
+          "foreground": "#ff0000",
+          "fontStyle": "underline"
+        }
+      },
+      {
+        "scope": "warning",
+        "settings": {
+          "foreground": "#ffcc00",
+          "fontStyle": "underline"
+        }
+      }
+    ]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // ✅ Ensure ESLint formats JS
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
