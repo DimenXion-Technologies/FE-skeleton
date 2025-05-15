@@ -2,7 +2,8 @@
 
 import React from "react";
 import { useTranslation } from "../../../components/language-provider";
-import { Typography, Container, Tabs, Tab } from "@mui/material";
+import { Typography, Container, Tabs, Tab, Box } from "@mui/material";
+import TabPanel from "../../../components/tab-panel";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -18,9 +19,8 @@ export default function Home() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
         py: 8,
       }}
     >
@@ -34,11 +34,26 @@ export default function Home() {
         {t("Patient")}
       </Typography>
 
-      <Tabs value={value} onChange={handleChange}>
-        <Tab label="One" />
-        <Tab label="Two" />
-        <Tab label="Three" />
-      </Tabs>
+      <Box>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="Patients" />
+          <Tab label="Donor" />
+          <Tab label="Recepient" />
+        </Tabs>
+
+        <TabPanel value={value} index={0}>
+          {/* Patients Tab Content */}
+          This is the Patients tab.
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {/* Donor Tab Content */}
+          This is the Donor tab.
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          {/* Recipient Tab Content */}
+          This is the Recipient tab.
+        </TabPanel>
+      </Box>
 
       <style jsx global>{`
         @keyframes pulse {
