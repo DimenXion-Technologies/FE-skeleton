@@ -15,7 +15,7 @@ export function MobileSidebar() {
         edge="start"
         color="inherit"
         aria-label="menu"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen(open ? false : true)}
         sx={{ display: { lg: "none" } }}
       >
         <MenuIcon />

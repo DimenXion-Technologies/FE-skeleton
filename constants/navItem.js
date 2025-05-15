@@ -8,10 +8,16 @@ const navItems = [
     label: "Dashboard",
   },
   {
-    title: "Patient",
-    href: "/patient",
+    title: "Donor",
+    href: "/donor",
     icon: PeopleOutline,
-    label: "Patient",
+    label: "Donor",
+  },
+  {
+    title: "Recipient",
+    href: "/recipient",
+    icon: PeopleOutline,
+    label: "Recipient",
   },
   {
     title: "Blood Bank",

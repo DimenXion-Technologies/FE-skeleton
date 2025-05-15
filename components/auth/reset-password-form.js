@@ -45,7 +45,7 @@ export function ResetPasswordForm() {
   };
 
   return (
-    <Paper elevation={6} sx={{ padding: 4, borderRadius: 3 }}>
+    <Paper>
       {isSubmitted ? (
         <Stack spacing={2} alignItems="center" textAlign="center">
           <Box

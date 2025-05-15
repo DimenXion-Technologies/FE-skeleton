@@ -7,18 +7,7 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        textAlign: "center",
-        py: 8,
-      }}
-    >
+    <Container>
       <Typography
         variant="h1"
         component="div"

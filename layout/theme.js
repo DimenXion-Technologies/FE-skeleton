@@ -5,6 +5,7 @@ const primaryColor = "#16a34a";
 const secondaryColor = "#ea580c";
 const whiteColor = "#FFFFFF";
 const darkBackground = "#121212";
+const grayBackground = "#E8E9EB";
 
 export const getTheme = (mode) => {
   return createTheme({
@@ -29,6 +30,43 @@ export const getTheme = (mode) => {
       },
     },
     components: {
+      MuiContainer: {
+        styleOverrides: {
+          root: {
+            minWidth: '100%',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            padding: 0,
+          },
+        },
+        defaultProps: {
+          maxWidth: false,
+          disableGutters: true,
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            boxSizing: "border-box",
+          },
+        },
+        defaultProps: {
+          elevation: 6,
+        },
+      },
+      MuiTableContainer: {
+        styleOverrides: {
+          root: {
+            borderRadius: 12,
+            boxSizing: "border-box",
+            marginTop: 32,
+            marginBottom: 32,
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -81,6 +119,21 @@ export const getTheme = (mode) => {
           },
         },
       },
+      MuiSelect: {
+        styleOverrides: {
+          select: {
+            padding: 15,
+            backgroundColor: mode === "light" ? whiteColor : darkBackground,
+            borderRadius: 12,
+            "&:focus": {
+              backgroundColor: "#f0f0f0",
+            },
+          },
+          icon: {
+            color: "#555",
+          },
+        },
+      },
       MuiTabs: {
         styleOverrides: {
           root: {
@@ -104,10 +157,10 @@ export const getTheme = (mode) => {
             margin: 2,
             borderRadius: "8px",
             "&.Mui-selected": {
-              backgroundColor: "#E8E9EB",
+              backgroundColor: grayBackground,
             },
             "&:hover": {
-              color: "#0059b2",
+              color: secondaryColor,
               opacity: 1,
             },
             "&.Mui-disabled": {

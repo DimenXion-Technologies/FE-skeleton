@@ -77,7 +77,7 @@ export function SignUpForm() {
   };
 
   return (
-    <Paper elevation={6} sx={{ padding: 4, borderRadius: 3 }}>
+    <Paper>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <TextField
           label="Email"
