@@ -33,12 +33,12 @@ export const getTheme = (mode) => {
       MuiContainer: {
         styleOverrides: {
           root: {
-            minWidth: '100%',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            minWidth: "100%",
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
             padding: 0,
           },
         },
@@ -61,6 +61,7 @@ export const getTheme = (mode) => {
         styleOverrides: {
           root: {
             borderRadius: 12,
+            padding: 12,
             boxSizing: "border-box",
             marginTop: 32,
             marginBottom: 32,
@@ -122,7 +123,6 @@ export const getTheme = (mode) => {
       MuiSelect: {
         styleOverrides: {
           select: {
-            padding: 15,
             backgroundColor: mode === "light" ? whiteColor : darkBackground,
             borderRadius: 12,
             "&:focus": {

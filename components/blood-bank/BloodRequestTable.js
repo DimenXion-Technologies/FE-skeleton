@@ -1,53 +1,55 @@
-import React, { useState, useMemo } from "react";
+"use client";
+
+import { useState, useMemo } from "react";
 import {
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Chip,
   IconButton,
+  Chip,
   TextField,
   InputAdornment,
+  TableSortLabel,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import PaginationComponent from "../pagination";
 
+// ✅ Replace this with real/fetched data
 const sampleData = [
   {
-    id: "R001",
-    name: "John Doe",
+    requestId: "#REQ001",
+    patient: "John Doe",
     bloodGroup: "A+",
-    registrationDate: "2024-11-20",
-    dob: "2025-05-20",
-    contact: "123-456-7890",
-    email: "john@example.com",
-    hospital: "HIMS",
-    status: "Active",
+    component: "Whole Blood",
+    quantity: "2 units",
+    date: "2023-05-14",
+    status: "Pending",
+    urgency: "Emergency",
   },
   {
-    id: "R002",
-    name: "Jane Smith",
-    bloodGroup: "O-",
-    registrationDate: "2024-09-10",
-    dob: "2025-03-10",
-    contact: "987-654-3210",
-    email: "jane@example.com",
-    hospital: "HIMS",
-    status: "Inactive",
+    requestId: "#REQ002",
+    patient: "Jane Smith",
+    bloodGroup: "B-",
+    component: "Plasma",
+    quantity: "1 unit",
+    date: "2023-05-10",
+    status: "Completed",
+    urgency: "Routine",
   },
 ];
 
-export function RecipientTable() {
+export function BloodRequestTale() {
   const [data, setData] = useState(sampleData);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(5);
+  const [rowsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState(null);
 
   const filteredData = useMemo(() => {
@@ -61,7 +63,6 @@ export function RecipientTable() {
       filtered.sort((a, b) => {
         const aVal = a[sortConfig.key];
         const bVal = b[sortConfig.key];
-
         if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
         if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
         return 0;
@@ -84,8 +85,6 @@ export function RecipientTable() {
       return { key, direction: "asc" };
     });
   };
-
-  const pageCount = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
     <TableContainer
@@ -112,23 +111,26 @@ export function RecipientTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell onClick={() => handleSort("id")}>ID</TableCell>
-            <TableCell onClick={() => handleSort("name")}>Name</TableCell>
-            <TableCell onClick={() => handleSort("hospital")}>
-              Hospital
-            </TableCell>
-            <TableCell onClick={() => handleSort("bloodGroup")}>
-              Blood Group
-            </TableCell>
-            <TableCell onClick={() => handleSort("registrationDate")}>
-              Registration Date
-            </TableCell>
-            <TableCell onClick={() => handleSort("dob")}>
-              Date of Borth
-            </TableCell>
-            <TableCell onClick={() => handleSort("contact")}>Contact</TableCell>
-            <TableCell onClick={() => handleSort("email")}>Email</TableCell>
-            <TableCell>Status</TableCell>
+            {[
+              { key: "requestId", label: "Request ID" },
+              { key: "patient", label: "Patient" },
+              { key: "bloodGroup", label: "Blood Group" },
+              { key: "component", label: "Component" },
+              { key: "quantity", label: "Quantity" },
+              { key: "date", label: "Date" },
+              { key: "status", label: "Status" },
+              { key: "urgency", label: "Urgency" },
+            ].map((col) => (
+              <TableCell key={col.key}>
+                <TableSortLabel
+                  active={sortConfig?.key === col.key}
+                  direction={sortConfig?.direction}
+                  onClick={() => handleSort(col.key)}
+                >
+                  {col.label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -136,28 +138,51 @@ export function RecipientTable() {
           {paginatedData.length === 0 ? (
             <TableRow>
               <TableCell colSpan={9} align="center">
-                No records found
+                No requests found.
               </TableCell>
             </TableRow>
           ) : (
-            paginatedData.map((item, idx) => (
-              <TableRow key={idx}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.hospital}</TableCell>
+            paginatedData.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>{item.requestId}</TableCell>
+                <TableCell>{item.patient}</TableCell>
                 <TableCell>{item.bloodGroup}</TableCell>
-                <TableCell>{item.registrationDate}</TableCell>
-                <TableCell>{item.dob}</TableCell>
-                <TableCell>{item.contact}</TableCell>
-                <TableCell>{item.email}</TableCell>
+                <TableCell>{item.component}</TableCell>
+                <TableCell>{item.quantity}</TableCell>
+                <TableCell>{item.date}</TableCell>
                 <TableCell>
                   <Chip
                     label={item.status}
                     size="small"
                     sx={{
                       bgcolor:
-                        item.status === "Active" ? "#22c55e20" : "#f43f5e20",
-                      color: item.status === "Active" ? "#22c55e" : "#f43f5e",
+                        item.status === "Pending"
+                          ? "#fbbf2420"
+                          : item.status === "Completed"
+                          ? "#22c55e20"
+                          : "#e5e7eb",
+                      color:
+                        item.status === "Pending"
+                          ? "#d97706"
+                          : item.status === "Completed"
+                          ? "#22c55e"
+                          : "#6b7280",
+                      fontWeight: "medium",
+                      fontSize: "0.75rem",
+                    }}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Chip
+                    label={item.urgency}
+                    size="small"
+                    sx={{
+                      bgcolor:
+                        item.urgency === "Emergency"
+                          ? "#ef444420"
+                          : "#3b82f620",
+                      color:
+                        item.urgency === "Emergency" ? "#dc2626" : "#2563eb",
                       fontWeight: "medium",
                       fontSize: "0.75rem",
                     }}

@@ -1,53 +1,58 @@
-import React, { useState, useMemo } from "react";
+"use client";
+
+import { useState, useEffect, useMemo } from "react";
 import {
+  Typography,
+  Box,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Chip,
   IconButton,
-  TextField,
+  Chip,
+  TableSortLabel,
   InputAdornment,
+  TextField,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import PaginationComponent from "../pagination";
 
 const sampleData = [
   {
-    id: "R001",
-    name: "John Doe",
+    unitId: "#BU001",
+    donationId: "#DN001",
     bloodGroup: "A+",
-    registrationDate: "2024-11-20",
-    dob: "2025-05-20",
-    contact: "123-456-7890",
-    email: "john@example.com",
-    hospital: "HIMS",
-    status: "Active",
+    component: "Whole Blood",
+    quantity: "450ml",
+    collectionDate: "2023-05-01",
+    expiryDate: "2025-05-01",
+    location: "Main Hospital",
+    status: "Available",
   },
   {
-    id: "R002",
-    name: "Jane Smith",
+    unitId: "#BU002",
+    donationId: "#DN002",
     bloodGroup: "O-",
-    registrationDate: "2024-09-10",
-    dob: "2025-03-10",
-    contact: "987-654-3210",
-    email: "jane@example.com",
-    hospital: "HIMS",
-    status: "Inactive",
+    component: "Plasma",
+    quantity: "250ml",
+    collectionDate: "2023-06-15",
+    expiryDate: "2025-06-15",
+    location: "City Clinic",
+    status: "Used",
   },
 ];
 
-export function RecipientTable() {
+export function BloodInventoryTable() {
   const [data, setData] = useState(sampleData);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(5);
+  const [rowsPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState(null);
 
   const filteredData = useMemo(() => {
@@ -85,8 +90,6 @@ export function RecipientTable() {
     });
   };
 
-  const pageCount = Math.ceil(filteredData.length / rowsPerPage);
-
   return (
     <TableContainer
       component={Paper}
@@ -112,52 +115,57 @@ export function RecipientTable() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell onClick={() => handleSort("id")}>ID</TableCell>
-            <TableCell onClick={() => handleSort("name")}>Name</TableCell>
-            <TableCell onClick={() => handleSort("hospital")}>
-              Hospital
-            </TableCell>
-            <TableCell onClick={() => handleSort("bloodGroup")}>
-              Blood Group
-            </TableCell>
-            <TableCell onClick={() => handleSort("registrationDate")}>
-              Registration Date
-            </TableCell>
-            <TableCell onClick={() => handleSort("dob")}>
-              Date of Borth
-            </TableCell>
-            <TableCell onClick={() => handleSort("contact")}>Contact</TableCell>
-            <TableCell onClick={() => handleSort("email")}>Email</TableCell>
-            <TableCell>Status</TableCell>
+            {[
+              { key: "unitId", label: "Unit ID" },
+              { key: "donationId", label: "Donation ID" },
+              { key: "bloodGroup", label: "Blood Group" },
+              { key: "component", label: "Component" },
+              { key: "quantity", label: "Quantity" },
+              { key: "collectionDate", label: "Collection Date" },
+              { key: "expiryDate", label: "Expiry Date" },
+              { key: "location", label: "Location" },
+              { key: "status", label: "Status" },
+            ].map((col) => (
+              <TableCell key={col.key}>
+                <TableSortLabel
+                  active={sortConfig?.key === col.key}
+                  direction={sortConfig?.direction}
+                  onClick={() => handleSort(col.key)}
+                >
+                  {col.label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {paginatedData.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={9} align="center">
+              <TableCell colSpan={10} align="center">
                 No records found
               </TableCell>
             </TableRow>
           ) : (
             paginatedData.map((item, idx) => (
               <TableRow key={idx}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.hospital}</TableCell>
+                <TableCell>{item.unitId}</TableCell>
+                <TableCell>{item.donationId}</TableCell>
                 <TableCell>{item.bloodGroup}</TableCell>
-                <TableCell>{item.registrationDate}</TableCell>
-                <TableCell>{item.dob}</TableCell>
-                <TableCell>{item.contact}</TableCell>
-                <TableCell>{item.email}</TableCell>
+                <TableCell>{item.component}</TableCell>
+                <TableCell>{item.quantity}</TableCell>
+                <TableCell>{item.collectionDate}</TableCell>
+                <TableCell>{item.expiryDate}</TableCell>
+                <TableCell>{item.location}</TableCell>
                 <TableCell>
                   <Chip
                     label={item.status}
                     size="small"
                     sx={{
                       bgcolor:
-                        item.status === "Active" ? "#22c55e20" : "#f43f5e20",
-                      color: item.status === "Active" ? "#22c55e" : "#f43f5e",
+                        item.status === "Available" ? "#22c55e20" : "#f43f5e20",
+                      color:
+                        item.status === "Available" ? "#22c55e" : "#f43f5e",
                       fontWeight: "medium",
                       fontSize: "0.75rem",
                     }}

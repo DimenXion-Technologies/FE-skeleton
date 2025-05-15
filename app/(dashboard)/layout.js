@@ -1,6 +1,6 @@
 "use client";
 
-import { AppBar, Box, CssBaseline, Toolbar } from "@mui/material";
+import { AppBar, Box, CssBaseline } from "@mui/material";
 import Header from "../../layout/header";
 import Sidebar from "../../layout/sidebar";
 
